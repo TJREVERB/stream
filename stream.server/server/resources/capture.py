@@ -1,5 +1,7 @@
 import os
 import glob
+import json
+import base64
 from flask.json import jsonify
 from flask_restful import Resource
 
@@ -10,8 +12,8 @@ class CaptureResource(Resource):
 
     @staticmethod
     def get():
-        files = glob.glob("{directory}/*.png".format(directory=IMAGES_DIR))
-        latest = max(files, key=os.path.getctime)
-        return jsonify({
-            "image": open(latest, "rb").read()
-        })
+        return jsonify(json.dumps({
+            "status": 0,
+            "image": base64.encodebytes(open(max(glob.glob("{directory}/*.png".format(directory=IMAGES_DIR)),
+                                                 key=os.path.getctime)).read())
+        }))
