@@ -1,7 +1,8 @@
-from flask import Flask, send_from_directory
+import os
 from flask_cors import CORS
-from flask.blueprints import Blueprint
 from flask.json import jsonify
+from flask.blueprints import Blueprint
+from flask import Flask, send_from_directory
 
 from . import routes
 from . import settings
@@ -9,6 +10,10 @@ from . import settings
 app = Flask(__name__, static_url_path=settings.STATIC_ROOT)
 CORS(app)
 app.debug = settings.DEBUG
+
+
+if not os.path.exists(settings.IMAGES_DIR):
+    os.mkdir(settings.IMAGES_DIR)
 
 
 for blueprint in vars(routes).values():
@@ -19,6 +24,11 @@ for blueprint in vars(routes).values():
 @app.route('/static/js/<path:path>')
 def send_js(path):
     return send_from_directory('js', path)
+
+
+@app.route('/static/pictures/<path:path>')
+def send_pic(path):
+    return send_from_directory(settings.IMAGES_DIR, path)
 
 
 @app.route('/')
