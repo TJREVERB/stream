@@ -15,7 +15,14 @@ DELAY = 5
 
 
 class Camera:
-    def __init__(self, resolution: tuple, s: socket.socket, images_dir: str, image_type: str, delay: int):
+    def __init__(
+        self,
+        resolution: tuple,
+        s: socket.socket,
+        images_dir: str,
+        image_type: str,
+        delay: int,
+    ):
         self.camera = PiCamera()
         self.socket = s
         self.images_dir = images_dir
@@ -30,14 +37,15 @@ class Camera:
         time.sleep(2)
 
     def capture(self):
-        timestamp = datetime.datetime.fromtimestamp(time.time()).strftime("%Y-%m-%d %H:%M:%S")
+        timestamp = datetime.datetime.fromtimestamp(
+            time.time()
+        ).strftime(
+            "%Y-%m-%d %H:%M:%S"
+        )
         filename = f"{self.images_dir}/{timestamp}.{self.image_type}"
         self.camera.capture(filename)
 
-        im = cv2.imread(filename)
-        res, im_png = cv2.imencode("." + self.image_type)
-        self.socket.send(img_png.tobytes())
-
+        self.socket.send(cv2.imencode("." + self.image_type, cv2.imread(filename))[1].tobytes())
         time.sleep(self.delay)
 
 
@@ -56,7 +64,6 @@ def main():
     camera = Camera(RESOLUTION, init_socket(MIDDLEMAN), IMAGES_DIR, IMAGE_TYPE, DELAY)
     while True:
         camera.capture()
-
 
 
 if __name__ == "__main__":
