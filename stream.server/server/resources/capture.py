@@ -26,7 +26,6 @@ class CaptureResource(Resource):
         BodyArg("image", help="base64 encoded image"),
     )
     def post(**kwargs):
-        return jsonify(kwargs)
         with open(os.path.abspath(os.path.join(IMAGES_DIR, kwargs['filename'])), 'wb') as w:
             w.write(base64.decodebytes(kwargs['image'].encode("ascii")))
         return jsonify({"status": 0})
