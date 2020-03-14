@@ -16,8 +16,7 @@ IMAGES_DIR = os.path.abspath(os.path.join(BASE_DIR, "captures"))
 IMAGE_TYPE = "png"
 RESOLUTION = (1024, 768)
 HOST = "cubesat-stream.sites.tjhsst.edu"
-PORT = 80
-SERVER_ENDPOINT = "http://{host}:{port}/captures".format(host=HOST, port=PORT)
+SERVER_ENDPOINT = "https://{host}/captures".format(host=HOST)
 DELAY = 5
 
 
@@ -65,6 +64,7 @@ class Camera:
                         "filename": f"{filename}", "image": base64.encodebytes(f.read()).decode("ascii")
                     }
                 ))
+            print(r.text)
         time.sleep(self.delay)
 
 
