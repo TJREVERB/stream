@@ -7,6 +7,7 @@ import socket
 import datetime
 from picamera import PiCamera
 
+IMAGES_DIR = "captures"
 IMAGE_TYPE = "png"
 RESOLUTION = (1024, 768)
 MIDDLEMAN = ("localhost", 5000)  # (host, port)
@@ -52,7 +53,9 @@ def init_socket(server):
 
 
 def main():
-    camera = Camera(RESOLUTION, init_socket(MIDDLEMAN), IMAGE_TYPE, DELAY)
+    camera = Camera(RESOLUTION, init_socket(MIDDLEMAN), IMAGES_DIR, IMAGE_TYPE, DELAY)
+    while True:
+        camera.capture()
 
 
 
