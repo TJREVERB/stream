@@ -23,7 +23,7 @@ for blueprint in vars(routes).values():
 
 @app.route('/static/js/<path:path>')
 def send_js(path):
-    return send_from_directory('js', path)
+    return send_from_directory(os.path.abspath(os.path.join(settings.STATIC_ROOT, "js")), path)
 
 
 @app.route('/static/pictures/<path:path>')
