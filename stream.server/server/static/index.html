@@ -3,14 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/static/css/index.css">
     <script type="text/javascript" src="/static/js/index.js"></script>
 </head>
 <body>
-<img id="display">
+<img id="display" width="300px" height="300px">
 <div class="slidecontainer">
   <input type="range" min="1" max="1" value="1" class="slider" id="myRange">
 </div>
-<label id="demo"></label>
-<button id="mode" onclick="switchMode()">Switch to recording mode</button>
+<br />
+<label id="label" class="label-text"></label>
+<br />
+<br />
+<button id="mode" class="button" onclick="switchMode()">Switch to recording mode</button>
+<br />
+<br />
+<div id="recording" style="display: none;">
+    <label for="speed" class="label-text"><b>Set Speed: </b></label> 
+    <input id="speed" class="input" style="width: 25px;"></input>
+    <br />
+    <button id="play" class="button" onclick="play()">Play</button>
+</div>
 </body>
 </html>
