@@ -1,5 +1,6 @@
 let currfile = "";
 let filenames = [];
+let live = true;
 function updateDisplay(){
     let url = 'https://cubesat-stream.sites.tjhsst.edu/captures'
     var xmlHttp = new XMLHttpRequest();
@@ -20,7 +21,33 @@ function updateDisplay(){
     }
     let slider = document.getElementById("myRange");
     slider.max = filenames.length;
-    slider.value = slider.max;
+    if(live){
+        slider.value = slider.max;
+        change();
+    }
+}
+
+function change() {
+    let slider = document.getElementById("myRange");
+    let output = document.getElementById("demo");
+    output.innerHTML = slider.value;
+    let display = document.getElementById("display");
+    display.src = filenames[parseInt(slider.value) - 1];
+} 
+
+function switchMode(){
+    console.log(live);
+    live = !live;
+    let slider = document.getElementById("myRange");
+    let button = document.getElementById("mode");
+    if(live){
+        button.innerHTML = "Switch to recording mode";
+    }
+    else{
+        button.innerHTML = "Switch to live mode";
+        slider.value = slider.max;
+        change();
+    }
 }
 
 
@@ -29,11 +56,5 @@ window.onload = function(){
     var slider = document.getElementById("myRange");
     var output = document.getElementById("demo");
     output.innerHTML = slider.value; // Display the default slider value
-
-    // Update the current slider value (each time you drag the slider handle)
-    slider.oninput = function() {
-      output.innerHTML = this.value;
-      let display = document.getElementById("display");
-      display.src = filenames[parseInt(this.value) - 1];
-    } 
+    slider.oninput = change;
 };
