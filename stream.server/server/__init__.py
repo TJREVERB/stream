@@ -26,6 +26,11 @@ def send_js(path):
     return send_from_directory(os.path.abspath(os.path.join(settings.STATIC_ROOT, "js")), path)
 
 
+@app.route('/static/css/<path:path>')
+def send_css(path):
+    return send_from_directory(os.path.abspath(os.path.join(settings.STATIC_ROOT, "css")), path)
+
+
 @app.route('/static/pictures/<path:path>')
 def send_pic(path):
     return send_from_directory(settings.IMAGES_DIR, path)
