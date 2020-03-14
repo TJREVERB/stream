@@ -13,6 +13,7 @@ function updateDisplay(){
         return;
     }
     let filepaths = json.image;
+    filepaths = filepaths.sort();
     for(let i = 0; i < filepaths.length; i++){
         let filepath = filepaths[i];
         if(!filenames.includes(filepath)){
