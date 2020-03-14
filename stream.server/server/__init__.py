@@ -20,6 +20,7 @@ for blueprint in vars(routes).values():
 def send_js(path):
     return send_from_directory('js', path)
 
+
 @app.route('/')
 def index(path):
     return app.send_static_file('index.html')
