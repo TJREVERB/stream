@@ -12,8 +12,7 @@ class CaptureResource(Resource):
 
     @staticmethod
     def get():
-        return jsonify(json.dumps({
-            "status": 0,
-            "image": base64.encodebytes(open(max(glob.glob("{directory}/*.png".format(directory=IMAGES_DIR)),
-                                                 key=os.path.getctime)).read())
-        }))
+        d = {"status": 0, "image": base64.b64encode(open(max(glob.glob("{directory}/*".format(directory=IMAGES_DIR)),
+                                                             key=os.path.getctime), 'rb').read())}
+        return d
+        return jsonify(d)

@@ -6,8 +6,8 @@ from flask.json import jsonify
 from . import routes
 from . import settings
 
-
 app = Flask(__name__, static_url_path=settings.STATIC_ROOT)
+CORS(app)
 app.debug = settings.DEBUG
 
 
@@ -22,5 +22,9 @@ def send_js(path):
 
 
 @app.route('/')
-def index(path):
+def index():
     return app.send_static_file('index.html')
+
+
+if __name__ == "__main__":
+    app.run(host=settings.HOST, port=settings.PORT)

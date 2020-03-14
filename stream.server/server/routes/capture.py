@@ -5,5 +5,5 @@ from ..resources import CaptureResource
 
 CAPTURE_BLUEPRINT = Blueprint("captures", __name__)
 Api(CAPTURE_BLUEPRINT).add_resource(
-    CaptureResource, "/captures/"
+    CaptureResource, "/captures"
 )
