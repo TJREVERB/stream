@@ -10,10 +10,10 @@ class CaptureResource(Resource):
 
     @staticmethod
     def get():
-        file = max(glob.glob("{directory}/*".format(directory=IMAGES_DIR)), key=os.path.getctime)
+        files = sorted(glob.glob("{directory}/*".format(directory=IMAGES_DIR)), key=os.path.getctime)
         return jsonify(
             {
                 "status": 0,
-                "image": file[file.find('static'):]
+                "image": [file[file.find('static'):] for file in files]
             }
         )
