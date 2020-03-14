@@ -22,9 +22,11 @@ class CaptureResource(Resource):
 
     @staticmethod
     @validate(
-        BodyArg("filename", type=str, help="Filename of image"),
-        BodyArg("image", type=str, help="base64 encoded image"),
+        BodyArg("filename", help="Filename of image"),
+        BodyArg("image", help="base64 encoded image"),
     )
     def post(**kwargs):
-        with open(kwargs['filename'], 'wb') as w:
-            w.write(base64.decodebytes(kwargs['image']))
+        return jsonify(kwargs)
+        with open(os.path.abspath(os.path.join(IMAGES_DIR, kwargs['filename'])), 'wb') as w:
+            w.write(base64.decodebytes(kwargs['image'].encode("ascii")))
+        return jsonify({"status": 0})

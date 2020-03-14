@@ -1,20 +1,22 @@
 #!/usr/bin/env python3
 import os
 import sys
+import json
 import time
 import base64
 import datetime
 import requests
 from fakecamera import PiCamera
-#from picamera import PiCamera
+
+# from picamera import PiCamera
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 IMAGES_DIR = os.path.abspath(os.path.join(BASE_DIR, "captures"))
 IMAGE_TYPE = "png"
 RESOLUTION = (1024, 768)
-HOST = "198.38.16.84"
-PORT = 5000
+HOST = "0.0.0.0"
+PORT = 8080
 SERVER_ENDPOINT = "http://{host}:{port}/captures".format(host=HOST, port=PORT)
 DELAY = 5
 
@@ -47,13 +49,22 @@ class Camera:
         ).strftime(
             "%Y-%m-%d %H:%M:%S"
         )
-        filename = os.path.abspath(os.path.join(IMAGES_DIR, f"{self.images_dir}/{timestamp}.{self.image_type}"))
-        self.camera.capture(filename)
-        return filename
+        filename = f"{timestamp}.{self.image_type}"
+        absolute = os.path.abspath(os.path.join(IMAGES_DIR, filename))
+        self.camera.capture(absolute)
+        return filename, absolute
 
     def process(self):
-        with open(self.capture(), 'rb') as f:
-            requests.post(self.endpoint, data={"filename": filename, "image": base64.encodebytes(f.read())})
+        filename, absolute = self.capture()
+        with open(absolute, 'rb') as f:
+            r = requests.post(
+                url=self.endpoint,
+                headers={"Content-Type": "application/json"},
+                data=json.dumps(
+                    {
+                        "filename": f"{filename}", "image": base64.encodebytes(f.read()).decode("ascii")
+                    }
+                ))
         time.sleep(self.delay)
 
 
