@@ -15,8 +15,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 IMAGES_DIR = os.path.abspath(os.path.join(BASE_DIR, "captures"))
 IMAGE_TYPE = "png"
 RESOLUTION = (1024, 768)
-HOST = "0.0.0.0"
-PORT = 8080
+HOST = "cubesat-stream.sites.tjhsst.edu"
+PORT = 80
 SERVER_ENDPOINT = "http://{host}:{port}/captures".format(host=HOST, port=PORT)
 DELAY = 5
 
