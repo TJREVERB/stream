@@ -3,11 +3,11 @@ set -e
 
 apt update
 apt upgrade -y
-apt-get install -y python3 python3-pip python3-venv libpq-dev sshuttle tmux postgresql postgresql-contrib sshpass htop
-apt install -y htop zsh
+apt-get install -y python3 python3-pip python3-venv
+pip3 install virtualenv virtualenvwrapper
 
 
-cd /vagrant
-python3 -m venv venv
+cd stream
+virtualenv -p python3 venv
 source venv/bin/activate
 pip install -r requirements.txt

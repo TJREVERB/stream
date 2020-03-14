@@ -20,6 +20,8 @@ Vagrant.configure("2") do |config|
   end
   config.vm.network :private_network, ip: '192.168.50.50'
 
+  config.vm.synced_folder ".", "/home/vagrant/stream"
+
   config.vm.provision "shell", path: "config/vagrant/provision_vagrant.sh"
   config.ssh.username = "vagrant"
 
